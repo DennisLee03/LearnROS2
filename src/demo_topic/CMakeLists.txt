@@ -21,8 +21,13 @@ add_executable(vec_pub src/vec_pub.cpp)
 ament_target_dependencies(vec_pub rclcpp)
 target_link_libraries(vec_pub "${cpp_typesupport_target}")
 
+add_executable(vec_sub src/vec_sub.cpp)
+ament_target_dependencies(vec_sub rclcpp)
+target_link_libraries(vec_sub "${cpp_typesupport_target}")
+
 install(TARGETS
   vec_pub
+  vec_sub
   DESTINATION lib/${PROJECT_NAME}
 )
 
