@@ -7,9 +7,25 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(rclcpp REQUIRED)
+
+# generate custom interfaces
+rosidl_generate_interfaces("${PROJECT_NAME}"
+  "msg/Vector.msg"
+  ADD_LINTER_TESTS
+)
+rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" rosidl_typesupport_cpp)
+
+add_executable(vec_pub src/vec_pub.cpp)
+ament_target_dependencies(vec_pub rclcpp)
+target_link_libraries(vec_pub "${cpp_typesupport_target}")
+
+install(TARGETS
+  vec_pub
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
