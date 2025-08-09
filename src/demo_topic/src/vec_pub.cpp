@@ -7,6 +7,7 @@
 #include "demo_topic/msg/vector.hpp"
 
 #include <functional>
+#include <iostream>
 #include <chrono>
 
 typedef demo_topic::msg::Vector Vector;
@@ -19,23 +20,25 @@ class VecPubNode: public rclcpp::Node
 	public:
 		VecPubNode(): Node("vec_pub_node")
 		{
-			vector_ = Vector();
-			vector_.x = X_DEFAULT_VAL;
-			vector_.y = Y_DEFAULT_VAL;
+			this->declare_parameter<double>("x_val", X_DEFAULT_VAL);
+			this->declare_parameter<double>("y_val", Y_DEFAULT_VAL);
 			publisher_ = this->create_publisher<Vector>("vector", 10);
 			timer_ = this->create_wall_timer(
 				std::chrono::seconds(1), 
 				std::bind(&VecPubNode::pub_vec_callback, this)
 			);
+			std::cout << "Publishing vector...\n";		
 		}
 	private:
 		rclcpp::Publisher<Vector>::SharedPtr publisher_;
 		rclcpp::TimerBase::SharedPtr timer_;
-		Vector vector_;
 
 		void pub_vec_callback() 
 		{
-			publisher_->publish(vector_);
+			auto vector = Vector();
+			vector.x = this->get_parameter("x_val").as_double();
+			vector.y = this->get_parameter("y_val").as_double();
+			publisher_->publish(vector);
 		}
 };
 
