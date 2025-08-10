@@ -14,6 +14,8 @@ int main(int argc, char* argv[])
 	auto client_node = rclcpp::Node::make_shared("vec_client_node");
 	auto client = client_node->create_client<VectorSrv>("calculate_length");
 
+	// cannot use Vector::Request::SharedPtr()
+	// it is null because you don't allocate any space to it
 	auto request = std::make_shared<VectorSrv::Request>();
 	std::cout << "Please type a vector to calculate its length: ";
 	std::cin >> request->x >> request->y;
