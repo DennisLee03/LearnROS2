@@ -1,0 +1,8 @@
+# Goal
+int32 n         # n-th
+---
+# Result
+int32 fib_n     # fib(n)
+---
+# Feedback
+int32 fib_i     # fibonacci number before the n-th one
