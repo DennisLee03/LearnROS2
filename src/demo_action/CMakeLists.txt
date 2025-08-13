@@ -26,8 +26,13 @@ add_executable(fib_action_server src/fib_action_server.cpp)
 ament_target_dependencies(fib_action_server rclcpp rclcpp_action)
 target_link_libraries(fib_action_server "${cpp_typesupport_target}")
 
+add_executable(fib_action_client src/fib_action_client.cpp)
+ament_target_dependencies(fib_action_client rclcpp rclcpp_action)
+target_link_libraries(fib_action_client "${cpp_typesupport_target}")
+
 install(TARGETS
   fib_action_server
+  fib_action_client
   DESTINATION lib/${PROJECT_NAME}
 )
 
