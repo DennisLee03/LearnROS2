@@ -47,7 +47,7 @@
     </link>
 
     <gazebo reference="chassis_link">
-        <material>Gazebo/Blue</material>
+        <material>Gazebo/SkyBlue</material>
     </gazebo>
 
     <!-- left wheel link -->
