@@ -2,4 +2,5 @@
 build/
 install/
 log/
+*_tutorial/
 *_example/
