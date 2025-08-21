@@ -21,7 +21,6 @@ install(TARGETS
   DESTINATION lib/${PROJECT_NAME}
 )
 
-# launch files installation
 install(DIRECTORY
   launch description config worlds
   DESTINATION share/${PROJECT_NAME}/
