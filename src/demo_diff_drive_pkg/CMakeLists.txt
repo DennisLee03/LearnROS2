@@ -7,9 +7,19 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
+
+add_executable(simple_go_to_goal src/simple_go_to_goal.cpp)
+ament_target_dependencies(simple_go_to_goal rclcpp nav_msgs geometry_msgs tf2 tf2_geometry_msgs)
+
+install(TARGETS
+  simple_go_to_goal
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 # launch files installation
 install(DIRECTORY
