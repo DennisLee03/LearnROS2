@@ -129,7 +129,7 @@ class SimpleGoToGoalNode: public rclcpp::Node
             twist_msg.angular.z = angular_output;
 
             // 5. Add a stop condition for when the robot is close to the goal
-            if (distance_to_goal < 0.05) {
+            if (distance_to_goal < 0.1) {
                 twist_msg.linear.x = 0.0;
                 twist_msg.angular.z = 0.0;
                 RCLCPP_INFO(this->get_logger(), "Goal reached!");
