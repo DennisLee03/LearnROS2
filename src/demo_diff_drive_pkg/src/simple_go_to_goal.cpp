@@ -60,12 +60,12 @@ class SimpleGoToGoalNode: public rclcpp::Node
 
             auto twist_msg = geometry_msgs::msg::Twist();
 
-            // 4. Apply the PID outputs to your Twist message
+            // Apply the PID outputs to your Twist message
             // Use the calculated outputs for the linear and angular commands
             twist_msg.linear.x = linear_output;
             twist_msg.angular.z = angular_output;
 
-            // 5. Add a stop condition for when the robot is close to the goal
+            // Add a stop condition for when the robot is close to the goal
             if (distance_to_goal < 0.1) {
                 twist_msg.linear.x = 0.0;
                 twist_msg.angular.z = 0.0;

@@ -27,13 +27,27 @@ rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_t
 
 
 include_directories(include)
+
 add_executable(simple_go_to_goal src/simple_go_to_goal.cpp src/PID_control.cpp)
 ament_target_dependencies(simple_go_to_goal rclcpp nav_msgs geometry_msgs tf2 tf2_geometry_msgs)
+
+add_executable(simple_go_to_goal_action_server 
+  src/simple_go_to_goal_action_server.cpp src/PID_control.cpp
+)
+ament_target_dependencies(simple_go_to_goal_action_server 
+  rclcpp 
+  nav_msgs 
+  geometry_msgs 
+  tf2 
+  tf2_geometry_msgs
+)
+target_link_libraries(simple_go_to_goal_action_server "${cpp_typesupport_target}")
 
 
 
 install(TARGETS
   simple_go_to_goal
+  simple_go_to_goal_action_server
   DESTINATION lib/${PROJECT_NAME}
 )
 
