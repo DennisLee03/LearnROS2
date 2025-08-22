@@ -8,13 +8,29 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_geometry_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
 
-add_executable(simple_go_to_goal src/simple_go_to_goal.cpp)
+# generate custom interface
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "action/SimpleGoToGoal.action"
+  DEPENDENCIES
+  action_msgs
+  ADD_LINTER_TESTS
+)
+
+rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+
+
+include_directories(include)
+add_executable(simple_go_to_goal src/simple_go_to_goal.cpp src/PID_control.cpp)
 ament_target_dependencies(simple_go_to_goal rclcpp nav_msgs geometry_msgs tf2 tf2_geometry_msgs)
+
+
 
 install(TARGETS
   simple_go_to_goal
@@ -24,6 +40,11 @@ install(TARGETS
 install(DIRECTORY
   launch description config worlds
   DESTINATION share/${PROJECT_NAME}/
+)
+
+install(
+  DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION include
 )
 
 if(BUILD_TESTING)
